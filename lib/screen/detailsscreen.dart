@@ -43,6 +43,7 @@
 //     );
 //   }
 // }
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -225,7 +226,40 @@ class DetailsScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(8.0),
+                            child: Column(children: [
+                              Text(
+                                  'Motor ini memungkinkan pemesanan tanpa durasi'),
+                            ]),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            child: Text("Thu, 27 Jun"),
+                          ),
+                          Icon(Icons.arrow_circle_right),
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            child: Text("Fri, 28 Jun"),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
