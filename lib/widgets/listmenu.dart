@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class ListMenu extends StatefulWidget {
   final String searchQuery;
+  final String selectedCategory;
 
-  // Konstruktor untuk widget ListMenu
-  const ListMenu({Key? key, required this.searchQuery}) : super(key: key);
+  const ListMenu({Key? key, required this.searchQuery, required this.selectedCategory}) : super(key: key);
 
   @override
   State<ListMenu> createState() => _ListMenuState();
@@ -18,21 +18,24 @@ class _ListMenuState extends State<ListMenu> {
           'https://www.yamaha-motor.co.id/uploads/products/featured_image/2023102519190474792T91675.png',
       'title': 'Yamaha Aerox 2021',
       'description': 'Deskripsi untuk gambar 1',
-      'harga': '50.000'
+      'harga': '50.000',
+      'jenis': 'Yamaha'
     },
     {
       'image':
           'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//95/MTA-71376340/yamaha_yamaha_full01.jpg',
       'title': 'Vario 2011',
       'description': 'Deskripsi untuk gambar 2',
-      'harga': '70.000'
+      'harga': '70.000',
+      'jenis': 'Honda'
     },
     {
       'image':
           'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//101/MTA-62683319/yamaha_yamaha-mx-king-150_full00_62428B5E-9473-49B5-B2E3-532C4039BF1E.jpg',
       'title': 'Jupiter 2018',
       'description': 'Deskripsi untuk gambar 3',
-      'harga': '90.000'
+      'harga': '90.000',
+      'jenis': 'Yamaha'
     },
   ];
 
@@ -42,42 +45,16 @@ class _ListMenuState extends State<ListMenu> {
       final title = item['title']!.toLowerCase();
       final description = item['description']!.toLowerCase();
       final harga = item['harga']!.toLowerCase();
+      final jenis = item['jenis']!.toLowerCase();
       final searchQuery = widget.searchQuery.toLowerCase();
+      final selectedCategory = widget.selectedCategory.toLowerCase();
 
-      return title.contains(searchQuery) ||
-          description.contains(searchQuery) ||
-          harga.contains(searchQuery);
+      return (title.contains(searchQuery) ||
+              description.contains(searchQuery) ||
+              harga.contains(searchQuery) ||
+              jenis.contains(searchQuery)) &&
+          (selectedCategory.isEmpty || jenis.contains(selectedCategory));
     }).toList();
-
-    const stars = Row(
-      children: [
-        Icon(Icons.star, color: Color.fromARGB(255, 101, 67, 180)),
-        Icon(Icons.star, color: Color.fromARGB(255, 101, 67, 180)),
-        Icon(Icons.star, color: Color.fromARGB(255, 101, 67, 180)),
-        Icon(Icons.star, color: Colors.black),
-        Icon(Icons.star, color: Colors.black),
-      ],
-    );
-
-    final ratings = Container(
-      padding: const EdgeInsets.only(top: 8, bottom: 10),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          stars,
-          Text(
-            '170 Reviews',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w800,
-              fontFamily: 'Roboto',
-              letterSpacing: 0.5,
-              fontSize: 17,
-            ),
-          ),
-        ],
-      ),
-    );
 
     return ListView.builder(
       shrinkWrap: true,
@@ -125,7 +102,7 @@ class _ListMenuState extends State<ListMenu> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    item['title']!, // Teks judul
+                    '${item['title']}', // Teks judul digabung dengan jenis
                     style: const TextStyle(
                       fontSize: 20, // Ukuran font judul
                       fontWeight: FontWeight.bold, // Ketebalan font judul
@@ -152,10 +129,6 @@ class _ListMenuState extends State<ListMenu> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text.rich(
-                    // "From " + item['harga']!, // Teks deskripsi
-                    // style: TextStyle(
-                    //   fontSize: 14, // Ukuran font deskripsi
-                    // ),
                     TextSpan(
                       text: 'From ',
                       style: const TextStyle(
@@ -177,7 +150,7 @@ class _ListMenuState extends State<ListMenu> {
                     ),
                   ),
                 ),
-                ratings
+                // Ratings Widget here if required
               ],
             ),
           ),

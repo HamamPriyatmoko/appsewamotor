@@ -14,11 +14,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
+  String _selectedCategory = '';
 
   void _updateSearchQuery(String newQuery) {
     setState(() {
       _searchQuery = newQuery;
     });
+  }
+
+  void _onCategoryTap(String category) {
+    setState(() {
+      _selectedCategory = category;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Category tapped: $category')),
+    );
   }
 
   @override
@@ -75,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                CategoriesItem(),
+                CategoriesItem(onCategoryTap: _onCategoryTap),
                 //Slider Widget
                 SizedBox(height: 25),
                 Row(
@@ -123,7 +133,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: 25),
                 Container(
                   // Batasi tinggi ListView agar tidak memakan semua ruang
-                  child: ListMenu(searchQuery: _searchQuery),
+                  child: ListMenu(
+                    searchQuery: _searchQuery,
+                    selectedCategory: _selectedCategory,
+                  ),
                 ),
               ],
             ),

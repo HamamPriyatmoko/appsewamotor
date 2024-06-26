@@ -122,8 +122,8 @@ class DetailsScreen extends StatelessWidget {
                   right: 16,
                   child: Container(
                     color: Colors.black.withOpacity(0.5),
-                    padding: EdgeInsets.all(5),
-                    child: Text(
+                    padding: const EdgeInsets.all(5),
+                    child: const Text(
                       "+7",
                       style: TextStyle(color: Colors.white),
                     ),
@@ -138,7 +138,7 @@ class DetailsScreen extends StatelessWidget {
                 children: [
                   Text(
                     item['title']!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -151,7 +151,7 @@ class DetailsScreen extends StatelessWidget {
                   SizedBox(height: 8),
                   Row(
                     children: [
-                      Text(
+                      const Text(
                         'From ',
                         style: TextStyle(
                           color: Colors.purple,
@@ -160,13 +160,13 @@ class DetailsScreen extends StatelessWidget {
                       ),
                       Text(
                         item['harga']!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.purple,
                           fontSize: 20,
                         ),
                       ),
-                      Text(
+                      const Text(
                         ' Rp150.000',
                         style: TextStyle(
                           decoration: TextDecoration.lineThrough,
@@ -219,7 +219,7 @@ class DetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Booking Period',
                     style: TextStyle(
                       fontSize: 18,
@@ -231,8 +231,8 @@ class DetailsScreen extends StatelessWidget {
                       Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.all(8.0),
-                            child: Column(children: [
+                            margin: const EdgeInsets.all(8.0),
+                            child: const Column(children: [
                               Text(
                                   'Motor ini memungkinkan pemesanan tanpa durasi'),
                             ]),
@@ -245,12 +245,12 @@ class DetailsScreen extends StatelessWidget {
                             margin: const EdgeInsets.symmetric(horizontal: 10),
                             padding: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 10),
-                            child: Text("Thu, 27 Jun"),
+                            child: const Text("Thu, 27 Jun"),
                           ),
                           Icon(Icons.arrow_circle_right),
                           Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            padding: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 10),
                             child: Text("Fri, 28 Jun"),
                           )
@@ -263,13 +263,13 @@ class DetailsScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Total',
                         style: TextStyle(fontSize: 16),
                       ),
                       Text(
                         item['harga']!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -282,7 +282,7 @@ class DetailsScreen extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            // Contact action
+                            Navigator.pop(context);
                           },
                           child: Text('Cancel'),
                         ),
