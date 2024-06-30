@@ -38,17 +38,17 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
           _isLoading = false;
         });
 
-        // Handle registration success
+        // registrasi jika sukses
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       } catch (e) {
         setState(() {
           _isLoading = false;
         });
 
-        // Handle registration failure
+        // Registrasi jika gagal
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Registrasi gagal: $e')),
         );
@@ -66,12 +66,12 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
           children: [
             Container(
               margin: const EdgeInsets.only(left: 40),
-              child: Row(
+              child: const Row(
                 children: [
                   Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 120),
+                        padding: EdgeInsets.only(right: 120),
                         child: Text(
                           'Hi!',
                           style: TextStyle(
@@ -104,7 +104,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your username';
+                        return 'Masukkan username';
                       }
                       return null;
                     },
@@ -120,7 +120,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return 'Masukkan Email Anda';
                       }
                       return null;
                     },
@@ -137,7 +137,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
+                        return 'Masukkan Password';
                       }
                       return null;
                     },
@@ -154,10 +154,10 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please confirm your password';
+                        return 'Konfirmasi Password Anda';
                       }
                       if (value != _passwordController.text) {
-                        return 'Passwords do not match';
+                        return 'Password Tidak Cocok';
                       }
                       return null;
                     },
