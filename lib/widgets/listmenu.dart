@@ -1,7 +1,6 @@
 import 'package:appsewamotor/screen/detailsscreen.dart';
+import 'package:appsewamotor/service/api_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class ListMenu extends StatefulWidget {
   final String searchQuery;
@@ -29,30 +28,13 @@ class _ListMenuState extends State<ListMenu> {
 
   Future<void> fetchItems() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://10.0.2.2:8000/api/product'));
+      final List<Map<String, dynamic>> fetchedItems =
+          await apiservice.fetchProducts();
 
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        print("Data fetched successfully: $data"); // Debugging line
-        setState(() {
-          items = data
-              .map((item) => {
-                    'image': item['gambar'],
-                    'title': item['nama'],
-                    'description': item['deskripsi'],
-                    'harga': item['harga'],
-                    'jenis': item['jenis'],
-                  })
-              .toList();
-          isLoading = false;
-        });
-      } else {
-        print("Failed to load data. Status code: ${response.statusCode}");
-        setState(() {
-          isLoading = false;
-        });
-      }
+      setState(() {
+        items = fetchedItems;
+        isLoading = false;
+      });
     } catch (e) {
       print("Error occurred while fetching data: $e");
       setState(() {

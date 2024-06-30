@@ -50,4 +50,32 @@ class apiservice {
       throw Exception('Gagal melakukan registrasi');
     }
   }
+
+  // Metode untuk mengambil daftar produk dari API
+  static Future<List<Map<String, dynamic>>> fetchProducts() async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/product'));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        print("Data produk berhasil diambil: $data"); // Debugging line
+
+        return data
+            .map((item) => {
+                  'image': item['gambar'],
+                  'title': item['nama'],
+                  'description': item['deskripsi'],
+                  'harga': item['harga'],
+                  'jenis': item['jenis'],
+                })
+            .toList();
+      } else {
+        print("Gagal memuat data. Status code: ${response.statusCode}");
+        return [];
+      }
+    } catch (e) {
+      print("Terjadi kesalahan saat mengambil data produk: $e");
+      return [];
+    }
+  }
 }

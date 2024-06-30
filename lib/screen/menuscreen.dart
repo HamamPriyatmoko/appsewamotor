@@ -37,10 +37,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: SideMenu(), // Menambahkan SideMenu di sini
+      drawer: SideMenu(), 
       body: ListView(
         children: [
-          HomeAppBar(), // Menggunakan HomeAppBar
+          HomeAppBar(),
           Container(
             padding: const EdgeInsets.only(top: 15),
             decoration: const BoxDecoration(
