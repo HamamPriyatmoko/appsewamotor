@@ -1,5 +1,4 @@
-import 'package:appsewamotor/screen/menuscreen.dart';
-import 'package:appsewamotor/screen/sidebar_menu.dart';
+
 import 'package:appsewamotor/screen/splashscreen.dart';
 import 'package:flutter/material.dart';
 
