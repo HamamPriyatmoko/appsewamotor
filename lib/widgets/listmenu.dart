@@ -1,46 +1,72 @@
 import 'package:appsewamotor/screen/detailsscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ListMenu extends StatefulWidget {
   final String searchQuery;
   final String selectedCategory;
 
-  const ListMenu({Key? key, required this.searchQuery, required this.selectedCategory}) : super(key: key);
+  ListMenu({
+    Key? key,
+    required this.searchQuery,
+    required this.selectedCategory,
+  }) : super(key: key);
 
   @override
-  State<ListMenu> createState() => _ListMenuState();
+  _ListMenuState createState() => _ListMenuState();
 }
 
 class _ListMenuState extends State<ListMenu> {
-  final List<Map<String, String>> items = [
-    {
-      'image':
-          'https://www.yamaha-motor.co.id/uploads/products/featured_image/2023102519190474792T91675.png',
-      'title': 'Yamaha Aerox 2021',
-      'description': 'Deskripsi untuk gambar 1',
-      'harga': '50.000',
-      'jenis': 'Yamaha'
-    },
-    {
-      'image':
-          'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//95/MTA-71376340/yamaha_yamaha_full01.jpg',
-      'title': 'Vario 2011',
-      'description': 'Deskripsi untuk gambar 2',
-      'harga': '70.000',
-      'jenis': 'Honda'
-    },
-    {
-      'image':
-          'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//101/MTA-62683319/yamaha_yamaha-mx-king-150_full00_62428B5E-9473-49B5-B2E3-532C4039BF1E.jpg',
-      'title': 'Jupiter 2018',
-      'description': 'Deskripsi untuk gambar 3',
-      'harga': '90.000',
-      'jenis': 'Yamaha'
-    },
-  ];
+  List<Map<String, dynamic>> items = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchItems();
+  }
+
+  Future<void> fetchItems() async {
+    try {
+      final response =
+          await http.get(Uri.parse('http://10.0.2.2:8000/api/product'));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        print("Data fetched successfully: $data"); // Debugging line
+        setState(() {
+          items = data
+              .map((item) => {
+                    'image': item['gambar'],
+                    'title': item['nama'],
+                    'description': item['deskripsi'],
+                    'harga': item['harga'],
+                    'jenis': item['jenis'],
+                  })
+              .toList();
+          isLoading = false;
+        });
+      } else {
+        print("Failed to load data. Status code: ${response.statusCode}");
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      print("Error occurred while fetching data: $e");
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+
     final filteredItems = items.where((item) {
       final title = item['title']!.toLowerCase();
       final description = item['description']!.toLowerCase();
@@ -55,6 +81,36 @@ class _ListMenuState extends State<ListMenu> {
               jenis.contains(searchQuery)) &&
           (selectedCategory.isEmpty || jenis.contains(selectedCategory));
     }).toList();
+
+    const stars = Row(
+      children: [
+        Icon(Icons.star, color: Color.fromARGB(255, 101, 67, 180)),
+        Icon(Icons.star, color: Color.fromARGB(255, 101, 67, 180)),
+        Icon(Icons.star, color: Color.fromARGB(255, 101, 67, 180)),
+        Icon(Icons.star, color: Colors.black),
+        Icon(Icons.star, color: Colors.black),
+      ],
+    );
+
+    final ratings = Container(
+      padding: const EdgeInsets.only(top: 8, bottom: 10),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          stars,
+          Text(
+            '170 Reviews',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w800,
+              fontFamily: 'Roboto',
+              letterSpacing: 0.5,
+              fontSize: 17,
+            ),
+          ),
+        ],
+      ),
+    );
 
     return ListView.builder(
       shrinkWrap: true,
@@ -88,8 +144,10 @@ class _ListMenuState extends State<ListMenu> {
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
                           item['image']!,
-                          width: 50, // Lebar gambar
-                          height: 100, // Tinggi gambar
+                          width: 50,
+                          height: 100,
+                          fit: BoxFit
+                              .cover, // Ensure the image fits the container
                         ),
                       ),
                     ),
@@ -102,10 +160,10 @@ class _ListMenuState extends State<ListMenu> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    '${item['title']}', // Teks judul digabung dengan jenis
+                    '${item['title']}',
                     style: const TextStyle(
-                      fontSize: 20, // Ukuran font judul
-                      fontWeight: FontWeight.bold, // Ketebalan font judul
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -116,9 +174,9 @@ class _ListMenuState extends State<ListMenu> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    item['description']!, // Teks deskripsi
+                    item['description']!,
                     style: const TextStyle(
-                      fontSize: 14, // Ukuran font deskripsi
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -133,7 +191,7 @@ class _ListMenuState extends State<ListMenu> {
                       text: 'From ',
                       style: const TextStyle(
                           color: Color.fromARGB(255, 101, 67, 180),
-                          fontSize: 15), // default text style
+                          fontSize: 15),
                       children: <TextSpan>[
                         TextSpan(
                             text: 'Rp${item['harga']!}',
@@ -150,7 +208,7 @@ class _ListMenuState extends State<ListMenu> {
                     ),
                   ),
                 ),
-                // Ratings Widget here if required
+                ratings
               ],
             ),
           ),

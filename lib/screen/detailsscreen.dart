@@ -47,9 +47,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatelessWidget {
-  final Map<String, String> item;
+  final Map<String, dynamic> item;
 
-  const DetailsScreen({Key? key, required this.item}) : super(key: key);
+  const DetailsScreen({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {

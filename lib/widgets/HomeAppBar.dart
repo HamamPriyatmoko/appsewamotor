@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({super.key});
+  const HomeAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,15 +12,12 @@ class HomeAppBar extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              // Aksi yang ingin dilakukan ketika ikon ditekan
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Menu icon tapped')),
-              );
+              Scaffold.of(context).openDrawer(); // Membuka drawer saat ikon "sort" diklik
             },
             child: Icon(
               Icons.sort,
               size: 30,
-              color: Colors.blue,
+              color: Colors.deepPurpleAccent,
             ),
           ),
           Padding(
@@ -33,7 +30,6 @@ class HomeAppBar extends StatelessWidget {
           Spacer(),
           InkWell(
             onTap: () {
-              // Aksi yang ingin dilakukan ketika profil ditekan
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Profile tapped')),
               );
@@ -49,9 +45,18 @@ class HomeAppBar extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/vario.jpg'),
-                  radius: 20,
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.deepPurpleAccent,
+                      width: 3.0,
+                    ),
+                  ),
+                  child: const CircleAvatar(
+                    backgroundImage: AssetImage('assets/images/vario.jpg'),
+                    radius: 25,
+                  ),
                 ),
               ],
             ),

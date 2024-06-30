@@ -1,17 +1,19 @@
-import 'package:appsewamotor/widgets/HomeAppBar.dart';
-import 'package:appsewamotor/widgets/categoriesitem.dart';
-import 'package:appsewamotor/widgets/listmenu.dart';
+import 'package:appsewamotor/screen/sidebar_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:appsewamotor/widgets/HomeAppBar.dart';
+import 'package:appsewamotor/widgets/CategoriesItem.dart';
+import 'package:appsewamotor/widgets/ListMenu.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   String _selectedCategory = '';
@@ -34,9 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: SideMenu(), // Menambahkan SideMenu di sini
       body: ListView(
         children: [
-          HomeAppBar(),
+          HomeAppBar(), // Menggunakan HomeAppBar
           Container(
             padding: const EdgeInsets.only(top: 15),
             decoration: const BoxDecoration(
@@ -48,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Column(
               children: [
-                //Search Widget
+                // Search Widget
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 15),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -73,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
+                SizedBox(height: 10,),
                 Row(
                   children: [
                     Container(
@@ -85,8 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                CategoriesItem(onCategoryTap: _onCategoryTap),
-                //Slider Widget
+                CategoriesItem(onCategoryTap: _onCategoryTap), // CategoriesItem
+                // Slider Widget
                 SizedBox(height: 25),
                 Row(
                   children: [
@@ -100,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 CarouselSlider(
                   options: CarouselOptions(
-                    height: 290.0, //tinggi card slide
+                    height: 290.0, // tinggi card slide
                     autoPlay: true,
                     enlargeCenterPage: true,
                   ),
@@ -129,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }).toList(),
                 ),
-                //item widget
+                // Item widget
                 SizedBox(height: 25),
                 Container(
                   // Batasi tinggi ListView agar tidak memakan semua ruang
