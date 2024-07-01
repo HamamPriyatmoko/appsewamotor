@@ -1,6 +1,8 @@
+import 'package:appsewamotor/screen/userprovider.dart';
 import 'package:appsewamotor/service/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:appsewamotor/screen/menuscreen.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -33,6 +35,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
         // Handle login success
         final token = responseData!['token'];
+        final username = responseData['name'];
+
+        // Update UserProvider dengan username
+        Provider.of<UserProvider>(context, listen: false).setUsername(username);
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const HomeScreen()),

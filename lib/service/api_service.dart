@@ -62,7 +62,7 @@ class apiservice {
 
         return data
             .map((item) => {
-                  'image': item['gambar'],
+                  'image': item['gambar'], //yang didalam item merupakan nama atribut yang ada di database
                   'title': item['nama'],
                   'description': item['deskripsi'],
                   'harga': item['harga'],
@@ -78,4 +78,6 @@ class apiservice {
       return [];
     }
   }
+
+  
 }

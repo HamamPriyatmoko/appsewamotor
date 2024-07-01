@@ -1,10 +1,15 @@
+import 'package:appsewamotor/screen/userprovider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final username = userProvider.name;
+    final profilePicture = userProvider.profilePicture;
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(15),
@@ -12,7 +17,8 @@ class HomeAppBar extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              Scaffold.of(context).openDrawer(); // Membuka drawer saat ikon "sort" diklik
+              Scaffold.of(context)
+                  .openDrawer(); // Membuka drawer saat ikon "sort" diklik
             },
             child: Icon(
               Icons.sort,
@@ -39,7 +45,7 @@ class HomeAppBar extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  "Hi, Hamam  ",
+                  "Hi, $username  ",
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.bold,
@@ -53,8 +59,10 @@ class HomeAppBar extends StatelessWidget {
                       width: 3.0,
                     ),
                   ),
-                  child: const CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/vario.jpg'),
+                  child: CircleAvatar(
+                    backgroundImage: profilePicture.isNotEmpty
+                        ? NetworkImage(profilePicture) as ImageProvider
+                        : AssetImage('assets/images/default_profile.jpg'),
                     radius: 25,
                   ),
                 ),

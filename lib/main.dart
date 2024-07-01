@@ -1,9 +1,15 @@
-
 import 'package:appsewamotor/screen/splashscreen.dart';
+import 'package:appsewamotor/screen/userprovider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

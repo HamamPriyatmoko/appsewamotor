@@ -1,4 +1,7 @@
+import 'package:appsewamotor/screen/loginscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:appsewamotor/screen/userprovider.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({Key? key}) : super(key: key);
@@ -16,6 +19,7 @@ class _SideMenuState extends State<SideMenu> {
     setState(() {
       _selectedIndex = index;
     });
+
     // Implementasi navigasi atau aksi untuk setiap item menu di sini
     switch (index) {
       case 0:
@@ -26,9 +30,7 @@ class _SideMenuState extends State<SideMenu> {
         break;
       case 1:
         // Implementasi untuk menu Log Out
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Log Out')),
-        );
+        _logout();
         break;
       case 2:
         // Implementasi untuk menu Pengaturan
@@ -37,6 +39,19 @@ class _SideMenuState extends State<SideMenu> {
         );
         break;
     }
+  }
+
+  // Fungsi logout
+  void _logout() {
+    // Lakukan tindakan logout di sini
+    // Misalnya, menghapus data pengguna atau token dari penyimpanan lokal
+    Provider.of<UserProvider>(context, listen: false).setUsername('');
+
+    // Navigasi ke layar login
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
   }
 
   // Widget untuk membangun item menu
@@ -75,6 +90,8 @@ class _SideMenuState extends State<SideMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final username = userProvider.name;
     return Drawer(
       child: Container(
         color: Colors.deepPurpleAccent,
@@ -92,7 +109,7 @@ class _SideMenuState extends State<SideMenu> {
                   ),
                 ),
                 title: Text(
-                  "Hamam Priyatmoko",
+                  "$username",
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -115,10 +132,8 @@ class _SideMenuState extends State<SideMenu> {
                 ),
               ),
               // Membuat item menu menggunakan fungsi buildMenuItem
-              buildMenuItem(
-                  index: 0, icon: Icons.home, title: "Beranda"),
-              buildMenuItem(
-                  index: 1, icon: Icons.logout, title: "Log Out"),
+              buildMenuItem(index: 0, icon: Icons.home, title: "Beranda"),
+              buildMenuItem(index: 1, icon: Icons.logout, title: "Log Out"),
               buildMenuItem(
                   index: 2, icon: Icons.settings, title: "Pengaturan"),
             ],
