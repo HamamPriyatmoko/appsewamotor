@@ -1,3 +1,5 @@
+import 'package:appsewamotor/screen/editscreen.dart';
+import 'package:appsewamotor/screen/profilescreen.dart';
 import 'package:appsewamotor/screen/splashscreen.dart';
 import 'package:appsewamotor/screen/userprovider.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
           seedColor: Color.fromARGB(255, 255, 234, 255),
         ),
       ),
-      home: SplashScreen(),
+      home: UpdateProfileScreen(),
     );
   }
 }
