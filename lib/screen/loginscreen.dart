@@ -63,89 +63,91 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(),
       body: Form(
         key: _formKey,
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(20),
-              child: Row(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          'Welcome !',
+                          style: TextStyle(
+                              fontSize: 40, fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          'Please login to continue',
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 40),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      Text(
-                        'Welcome !',
-                        style: TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.w500),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
                       ),
-                      Text(
-                        'Please login to continue',
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w400),
-                      ),
-                    ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Email tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: TextFormField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  _isLoading
+                      ? CircularProgressIndicator()
+                      : Container(
+                          height: 50,
+                          width: MediaQuery.of(context).size.width - 2 * 50,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.lightBlue,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12))),
+                            onPressed: _login,
+                            child: Text('Login',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w500)),
+                          ),
+                        ),
+                  SizedBox(height: 20),
+                  Text('Forgot Password?')
                 ],
               ),
-            ),
-            SizedBox(height: 40),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password tidak boleh kosong';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                SizedBox(height: 30),
-                _isLoading
-                    ? CircularProgressIndicator()
-                    : Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width - 2 * 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.lightBlue,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12))),
-                          onPressed: _login,
-                          child: Text('Login',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w500)),
-                        ),
-                      ),
-                SizedBox(height: 20),
-                Text('Forgot Password?')
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

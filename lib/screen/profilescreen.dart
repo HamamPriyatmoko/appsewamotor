@@ -1,3 +1,4 @@
+import 'package:appsewamotor/screen/editscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -11,6 +12,7 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
+            Navigator.pop(context);
             // Tambahkan fungsi untuk kembali ke halaman sebelumnya
           },
           icon: Icon(Icons.arrow_back),
@@ -72,6 +74,12 @@ class ProfileScreen extends StatelessWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UpdateProfileScreen(),
+                      ),
+                    );
                     // Tambahkan fungsi untuk navigasi ke halaman edit profile
                   },
                   child: Text("Edit Profile"),

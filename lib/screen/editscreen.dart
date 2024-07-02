@@ -11,7 +11,7 @@ class UpdateProfileScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            ProfileScreen();
+            Navigator.pop(context);
           },
           icon: Icon(LineAwesomeIcons.angle_left_solid),
         ),

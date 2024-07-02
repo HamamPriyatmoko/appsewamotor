@@ -1,3 +1,4 @@
+import 'package:appsewamotor/screen/profilescreen.dart';
 import 'package:appsewamotor/screen/userprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,8 +37,9 @@ class HomeAppBar extends StatelessWidget {
           Spacer(),
           InkWell(
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Profile tapped')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
               );
               // Atau navigasi ke halaman profil
               // Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
