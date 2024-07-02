@@ -1,7 +1,7 @@
 import 'package:appsewamotor/screen/loginscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:appsewamotor/screen/userprovider.dart';
+import 'package:appsewamotor/provider/userprovider.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({Key? key}) : super(key: key);
@@ -45,7 +45,7 @@ class _SideMenuState extends State<SideMenu> {
   void _logout() {
     // Lakukan tindakan logout di sini
     // Misalnya, menghapus data pengguna atau token dari penyimpanan lokal
-    Provider.of<UserProvider>(context, listen: false).setUsername('');
+    Provider.of<UserProvider>(context, listen: false).setName('');
 
     // Navigasi ke layar login
     Navigator.pushReplacement(

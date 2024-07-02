@@ -1,12 +1,34 @@
-import 'package:appsewamotor/screen/profilescreen.dart';
+import 'package:appsewamotor/provider/userprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
-class UpdateProfileScreen extends StatelessWidget {
+class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
 
   @override
+  State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
+}
+
+class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _telephoneController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    _usernameController.text = userProvider.name;
+    // You may add more initializations for address, telephone, and gender if they are part of UserProvider
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final profilePicture = userProvider.profilePicture;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -39,7 +61,9 @@ class UpdateProfileScreen extends StatelessWidget {
                     height: 120,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: Image.asset("assets/images/aerox.png"),
+                      child: profilePicture.isNotEmpty
+                          ? Image.network(profilePicture)
+                          : Image.asset("assets/images/default_profile.png"),
                     ),
                   ),
                   Positioned(
@@ -60,52 +84,54 @@ class UpdateProfileScreen extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
-                height: 50,
-              ),
+              SizedBox(height: 50),
               Form(
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: _usernameController,
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                          label: Text("Username"),
-                          prefixIcon: Icon(LineAwesomeIcons.user)),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        label: Text("Username"),
+                        prefixIcon: Icon(LineAwesomeIcons.user),
+                      ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    SizedBox(height: 10),
                     TextFormField(
+                      controller: _addressController,
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                          label: Text("Address"),
-                          prefixIcon: Icon(LineAwesomeIcons.address_card)),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        label: Text("Address"),
+                        prefixIcon: Icon(LineAwesomeIcons.address_card),
+                      ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    SizedBox(height: 10),
                     TextFormField(
+                      controller: _telephoneController,
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                          label: Text("Telephone"),
-                          prefixIcon: Icon(LineAwesomeIcons.phone_solid)),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        label: Text("Telephone"),
+                        prefixIcon: Icon(LineAwesomeIcons.phone_solid),
+                      ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    SizedBox(height: 10),
                     TextFormField(
+                      controller: _genderController,
                       decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                          label: Text("Gender"),
-                          prefixIcon: Icon(LineAwesomeIcons.genderless_solid)),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        label: Text("Gender"),
+                        prefixIcon: Icon(LineAwesomeIcons.genderless_solid),
+                      ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    SizedBox(height: 20),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -114,7 +140,17 @@ class UpdateProfileScreen extends StatelessWidget {
                           foregroundColor: Colors.white,
                         ),
                         onPressed: () {
-                          // Tambahkan fungsi untuk navigasi ke halaman edit profile
+                          // Update the user profile information
+                          userProvider.setName(_usernameController.text);
+                          // Add more update methods for address, telephone, gender if needed
+
+                          // Show a success message
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Profile updated successfully!')),
+                          );
+
+                          // Navigate back to the previous screen
+                          Navigator.pop(context);
                         },
                         child: Text(
                           "Save",
@@ -124,7 +160,7 @@ class UpdateProfileScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

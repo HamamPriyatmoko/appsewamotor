@@ -1,17 +1,15 @@
-import 'package:appsewamotor/provider/userprovider.dart';
-import 'package:appsewamotor/service/api_service.dart';
 import 'package:flutter/material.dart';
+import 'package:appsewamotor/service/api_service.dart';
 import 'package:appsewamotor/screen/menuscreen.dart';
-import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginAdminScreen extends StatefulWidget {
+  const LoginAdminScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginAdminScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginAdminScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -24,7 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       try {
-        final responseData = await apiservice.login(
+        final responseData = await apiservice.adminLogin(
+          // Menggunakan metode adminLogin dari apiservice
           _emailController.text,
           _passwordController.text,
         );
@@ -34,18 +33,14 @@ class _LoginScreenState extends State<LoginScreen> {
         });
 
         // Handle login success
-        final token = responseData!['token'];
-        final username = responseData['name'];
-        final profilePicture = responseData['profile_picture'] ?? '';
-
-        // Update UserProvider dengan username dan profile picture
-        Provider.of<UserProvider>(context, listen: false).setName(username);
-        Provider.of<UserProvider>(context, listen: false)
-            .setProfilePicture(profilePicture);
+        final token = responseData[
+            'token']; // Pastikan struktur respons dari backend sesuai dengan yang Anda harapkan
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(
+              builder: (context) =>
+                  const HomeScreen()), // Ganti dengan halaman setelah login sukses
         );
       } catch (e) {
         setState(() {
@@ -71,23 +66,16 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Container(
                 padding: EdgeInsets.all(20),
-                child: Row(
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          'Welcome !',
-                          style: TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          'Please login to continue',
-                          style: TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
-                  ],
+                child: const Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Login Admin',
+                        style: TextStyle(
+                            fontSize: 35, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 40),

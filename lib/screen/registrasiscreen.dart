@@ -30,7 +30,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
           _usernameController.text,
           _emailController.text,
           _passwordController.text,
-          _confirmPasswordController.text,
+          _confirmPasswordController.text
         );
 
         setState(() {

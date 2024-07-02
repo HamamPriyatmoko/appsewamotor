@@ -1,19 +1,24 @@
 import 'package:appsewamotor/screen/editscreen.dart';
+import 'package:appsewamotor/provider/userprovider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final profilePicture = userProvider.profilePicture;
+    final username = userProvider.name;
+    final email = userProvider.name;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
-            // Tambahkan fungsi untuk kembali ke halaman sebelumnya
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -37,7 +42,10 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 60,
-                    backgroundImage: AssetImage("assets/images/aerox.png"),
+                    backgroundImage: profilePicture.isNotEmpty
+                        ? NetworkImage(profilePicture)
+                        : AssetImage("assets/images/default_profile.png")
+                            as ImageProvider,
                   ),
                   Positioned(
                     bottom: 0,
@@ -46,23 +54,24 @@ class ProfileScreen extends StatelessWidget {
                       width: 35,
                       height: 35,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.deepPurpleAccent),
+                        borderRadius: BorderRadius.circular(100),
+                        color: Colors.deepPurpleAccent,
+                      ),
                       child: Icon(
                         LineAwesomeIcons.camera_solid,
                         size: 20,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
               SizedBox(height: 20),
               Text(
-                "Nama Pengguna",
+                username,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               Text(
-                "hamam@gmail.com",
+                email,
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 30),
@@ -80,7 +89,6 @@ class ProfileScreen extends StatelessWidget {
                         builder: (context) => UpdateProfileScreen(),
                       ),
                     );
-                    // Tambahkan fungsi untuk navigasi ke halaman edit profile
                   },
                   child: Text("Edit Profile"),
                 ),

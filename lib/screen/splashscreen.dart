@@ -1,6 +1,8 @@
+import 'package:appsewamotor/screen/adminscreen/sidebar_splash.dart';
 import 'package:appsewamotor/screen/loginscreen.dart';
 import 'package:appsewamotor/screen/registrasiscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,7 +15,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text("Remo")),),
+      appBar: AppBar(
+          leading: Builder(builder: (context) {
+            return IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SideMenuUtama()),
+                  );
+                },
+                icon: Icon(LineAwesomeIcons.align_justify_solid));
+          }),
+          title: Container(
+            padding: EdgeInsets.only(right: 35),
+            child: Column(
+              children: [
+                Center(child: Text("Remo")),
+              ],
+            ),
+          )),
       body: Center(
         child: Column(
           children: [
@@ -41,10 +62,10 @@ class _SplashScreenState extends State<SplashScreen> {
               width: MediaQuery.of(context).size.width - 2 * 50,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
-                ),
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15))),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -68,7 +89,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.lightBlue,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15))),
                 onPressed: () {
                   Navigator.push(
                     context,

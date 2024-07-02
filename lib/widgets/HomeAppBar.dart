@@ -1,7 +1,7 @@
-import 'package:appsewamotor/screen/profilescreen.dart';
-import 'package:appsewamotor/screen/userprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:appsewamotor/screen/profilescreen.dart';
+import 'package:appsewamotor/provider/userprovider.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({Key? key}) : super(key: key);
@@ -11,6 +11,7 @@ class HomeAppBar extends StatelessWidget {
     final userProvider = Provider.of<UserProvider>(context);
     final username = userProvider.name;
     final profilePicture = userProvider.profilePicture;
+
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(15),
@@ -41,8 +42,6 @@ class HomeAppBar extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => ProfileScreen()),
               );
-              // Atau navigasi ke halaman profil
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
             },
             child: Row(
               children: [
@@ -63,8 +62,9 @@ class HomeAppBar extends StatelessWidget {
                   ),
                   child: CircleAvatar(
                     backgroundImage: profilePicture.isNotEmpty
-                        ? NetworkImage(profilePicture) as ImageProvider
-                        : AssetImage('assets/images/default_profile.jpg'),
+                        ? NetworkImage(profilePicture)
+                        : AssetImage('assets/images/default_profile.png')
+                            as ImageProvider,
                     radius: 25,
                   ),
                 ),

@@ -1,7 +1,9 @@
+import 'package:appsewamotor/screen/adminscreen/homepage_admin.dart';
 import 'package:appsewamotor/screen/editscreen.dart';
+import 'package:appsewamotor/screen/menuscreen.dart';
 import 'package:appsewamotor/screen/profilescreen.dart';
 import 'package:appsewamotor/screen/splashscreen.dart';
-import 'package:appsewamotor/screen/userprovider.dart';
+import 'package:appsewamotor/provider/userprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +29,9 @@ class MyApp extends StatelessWidget {
           seedColor: Color.fromARGB(255, 255, 234, 255),
         ),
       ),
-      home: SplashScreen(),
+      home: HomeScreen(
+        
+      ),
     );
   }
 }

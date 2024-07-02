@@ -61,7 +61,8 @@ class apiservice {
 
         return data
             .map((item) => {
-                  'image': item['gambar'], //yang didalam item merupakan nama atribut yang ada di database
+                  'image': item[
+                      'gambar'], //yang didalam item merupakan nama atribut yang ada di database
                   'title': item['nama'],
                   'description': item['deskripsi'],
                   'harga': item['harga'],
@@ -78,5 +79,24 @@ class apiservice {
     }
   }
 
-  
+  static Future<Map<String, dynamic>> adminLogin(
+      String email, String password) async {
+    final url = Uri.parse('$baseUrl/admin/login');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Gagal melakukan login');
+    }
+  }
 }
