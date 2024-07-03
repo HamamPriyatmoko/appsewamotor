@@ -1,8 +1,4 @@
 import 'package:appsewamotor/screen/adminscreen/homepage_admin.dart';
-import 'package:appsewamotor/screen/editscreen.dart';
-import 'package:appsewamotor/screen/menuscreen.dart';
-import 'package:appsewamotor/screen/profilescreen.dart';
-import 'package:appsewamotor/screen/splashscreen.dart';
 import 'package:appsewamotor/provider/userprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

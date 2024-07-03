@@ -1,5 +1,5 @@
-import 'package:appsewamotor/screen/editscreen.dart';
 import 'package:appsewamotor/provider/userprovider.dart';
+import 'package:appsewamotor/screen/usersscreen/editscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:provider/provider.dart';

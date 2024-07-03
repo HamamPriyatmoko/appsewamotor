@@ -1,4 +1,4 @@
-import 'package:appsewamotor/screen/detailsscreen.dart';
+import 'package:appsewamotor/screen/usersscreen/detailsscreen.dart';
 import 'package:appsewamotor/service/api_service.dart';
 import 'package:flutter/material.dart';
 

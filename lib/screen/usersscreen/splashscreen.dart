@@ -1,6 +1,6 @@
 import 'package:appsewamotor/screen/adminscreen/sidebar_splash.dart';
-import 'package:appsewamotor/screen/loginscreen.dart';
-import 'package:appsewamotor/screen/registrasiscreen.dart';
+import 'package:appsewamotor/screen/usersscreen/loginscreen.dart';
+import 'package:appsewamotor/screen/usersscreen/registrasiscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 

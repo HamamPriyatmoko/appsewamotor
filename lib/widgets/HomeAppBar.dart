@@ -1,6 +1,6 @@
+import 'package:appsewamotor/screen/usersscreen/profilescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:appsewamotor/screen/profilescreen.dart';
 import 'package:appsewamotor/provider/userprovider.dart';
 
 class HomeAppBar extends StatelessWidget {

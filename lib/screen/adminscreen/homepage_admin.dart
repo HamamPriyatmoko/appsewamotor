@@ -1,3 +1,4 @@
+import 'package:appsewamotor/screen/adminscreen/addscreen.dart';
 import 'package:appsewamotor/screen/adminscreen/widget/adminmenu.dart';
 import 'package:appsewamotor/screen/adminscreen/widget/slider_menu.dart';
 import 'package:flutter/material.dart';
@@ -22,69 +23,79 @@ class _HomeAdminState extends State<HomeAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Title(color: Colors.black, child: Text("Remo")),
-      ),
-      body: ListView(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 15),
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(34, 91, 86, 86),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
+        appBar: AppBar(
+          title: Title(color: Colors.black, child: Text("Remo")),
+        ),
+        body: ListView(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 15),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(34, 91, 86, 86),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
               ),
-            ),
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _searchController,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Search Here...",
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: _searchController,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Search Here...",
+                            ),
+                            onChanged: (query) => _updateSearchQuery(query),
                           ),
-                          onChanged: (query) => _updateSearchQuery(query),
                         ),
-                      ),
-                      const Icon(Icons.search),
+                        const Icon(Icons.search),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(left: 15, bottom: 10),
+                        child: Text("New Collection",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 20)),
+                      )
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(left: 15, bottom: 10),
-                      child: Text("New Collection",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 20)),
-                    )
-                  ],
-                ),
-                SliderMenu(),
-                SizedBox(
-                  height: 12,
-                ),
-                AdminMenu(searchQuery: _searchQuery)
-              ],
+                  SliderMenu(),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  AdminMenu(searchQuery: _searchQuery),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddData(),
+              ),
+            );
+          },
+          child: Icon(Icons.add),
+        ));
   }
 }

@@ -1,6 +1,6 @@
+import 'package:appsewamotor/screen/adminscreen/homepage_admin.dart';
 import 'package:flutter/material.dart';
 import 'package:appsewamotor/service/api_service.dart';
-import 'package:appsewamotor/screen/menuscreen.dart';
 
 class LoginAdminScreen extends StatefulWidget {
   const LoginAdminScreen({Key? key}) : super(key: key);
@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginAdminScreen> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  const HomeScreen()), // Ganti dengan halaman setelah login sukses
+                  const HomeAdmin()), // Ganti dengan halaman setelah login sukses
         );
       } catch (e) {
         setState(() {

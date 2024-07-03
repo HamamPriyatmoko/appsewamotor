@@ -1,9 +1,7 @@
 import 'package:appsewamotor/provider/userprovider.dart';
-import 'package:appsewamotor/screen/splashscreen.dart';
+import 'package:appsewamotor/screen/usersscreen/menuscreen.dart';
 import 'package:appsewamotor/service/api_service.dart';
 import 'package:flutter/material.dart';
-import 'package:appsewamotor/screen/menuscreen.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
