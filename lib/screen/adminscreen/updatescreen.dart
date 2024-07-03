@@ -1,27 +1,27 @@
 import 'dart:io';
 
-import 'package:appsewamotor/screen/adminscreen/model/Produk.dart';
-import 'package:appsewamotor/service/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddData extends StatefulWidget {
-  const AddData({super.key});
+
+class UpdateData extends StatefulWidget {
+  const UpdateData({super.key});
 
   @override
-  State<AddData> createState() => _AddDataState();
+  State<UpdateData> createState() => _UpdateDataState();
 }
 
-class _AddDataState extends State<AddData> {
+class _UpdateDataState extends State<UpdateData> {
   File? _image;
   final _imagePicker = ImagePicker();
-  final apiservice _apiService = apiservice();
 
   final _formkey = GlobalKey<FormState>();
   final _namaController = TextEditingController();
   final _deskripsiController = TextEditingController();
   final _jenisController = TextEditingController();
   final _hargaController = TextEditingController();
+
+  // final KontakController _personController = KontakController();
 
   Future<void> getImage() async {
     final XFile? pickerFile =
@@ -36,49 +36,6 @@ class _AddDataState extends State<AddData> {
         }
       },
     );
-  }
-
-  Future<void> _uploadImageAndData() async {
-    if (_formkey.currentState!.validate() && _image != null) {
-      try {
-        // Upload gambar terlebih dahulu
-        final uploadResponse = await _apiService.uploadImage(_image!);
-        if (uploadResponse != null) {
-          final imageUrl = uploadResponse['url'];
-
-          // Buat instance produk dengan URL gambar
-          final produk = Produk(
-            nama: _namaController.text,
-            deskripsi: _deskripsiController.text,
-            jenis: _jenisController.text,
-            harga: _hargaController.text,
-            gambar: imageUrl,
-          );
-
-          // Kirim data produk ke backend
-          final response = await _apiService.addProduct(produk);
-
-          if (response.statusCode == 200) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Produk berhasil ditambahkan')),
-            );
-            Navigator.pop(context);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Gagal menambahkan produk')),
-            );
-          }
-        }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Gagal mengunggah gambar: $e')),
-        );
-      }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form atau gambar tidak boleh kosong')),
-      );
-    }
   }
 
   @override
@@ -113,15 +70,17 @@ class _AddDataState extends State<AddData> {
                         borderRadius: BorderRadius.circular(10),
                         child: Image.file(
                           _image!,
-                          fit: BoxFit.scaleDown,
-                          width: 200,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
                         ),
                       ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 25, top: 35),
                 child: ElevatedButton(
-                  onPressed: getImage,
+                  onPressed: () {
+                    getImage();
+                  },
                   child: const Text("Pilih Gambar"),
                 ),
               ),
@@ -131,12 +90,6 @@ class _AddDataState extends State<AddData> {
                   decoration: InputDecoration(
                       labelText: "Nama", hintText: "Masukkan Nama"),
                   controller: _namaController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Nama tidak boleh kosong';
-                    }
-                    return null;
-                  },
                 ),
               ),
               Container(
@@ -145,12 +98,6 @@ class _AddDataState extends State<AddData> {
                   decoration: InputDecoration(
                       labelText: "Deskripsi", hintText: "Masukkan Deskripsi"),
                   controller: _deskripsiController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Deskripsi tidak boleh kosong';
-                    }
-                    return null;
-                  },
                 ),
               ),
               Container(
@@ -159,12 +106,6 @@ class _AddDataState extends State<AddData> {
                   decoration: InputDecoration(
                       labelText: "Merk", hintText: "Masukkan Merk"),
                   controller: _jenisController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Merk tidak boleh kosong';
-                    }
-                    return null;
-                  },
                 ),
               ),
               Container(
@@ -173,12 +114,6 @@ class _AddDataState extends State<AddData> {
                   decoration: InputDecoration(
                       labelText: "Harga", hintText: "Masukkan Harga"),
                   controller: _hargaController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Harga tidak boleh kosong';
-                    }
-                    return null;
-                  },
                 ),
               ),
               SizedBox(
@@ -187,7 +122,7 @@ class _AddDataState extends State<AddData> {
               Container(
                 margin: EdgeInsets.all(10),
                 child: ElevatedButton(
-                  onPressed: _uploadImageAndData,
+                  onPressed: () {},
                   child: const Text("Submit"),
                 ),
               ),

@@ -13,6 +13,7 @@ class HomeAdmin extends StatefulWidget {
 class _HomeAdminState extends State<HomeAdmin> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
+  final GlobalKey<AdminMenuState> _adminMenuKey = GlobalKey<AdminMenuState>();
 
   void _updateSearchQuery(String newQuery) {
     setState(() {
@@ -23,10 +24,20 @@ class _HomeAdminState extends State<HomeAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Title(color: Colors.black, child: Text("Remo")),
-        ),
-        body: ListView(
+      appBar: AppBar(
+        title: Title(color: Colors.black, child: Text("Remo")),
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          // Memanggil fungsi fetchItems() dari AdminMenu menggunakan GlobalKey
+          if (_adminMenuKey.currentState != null) {
+            await _adminMenuKey.currentState!.fetchItems();
+          }
+          setState(() {
+            _searchQuery = _searchController.text;
+          });
+        },
+        child: ListView(
           children: [
             Container(
               padding: const EdgeInsets.only(top: 15),
@@ -63,7 +74,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
@@ -76,26 +87,31 @@ class _HomeAdminState extends State<HomeAdmin> {
                       )
                     ],
                   ),
-                  SliderMenu(),
-                  SizedBox(
+                  const SliderMenu(),
+                  const SizedBox(
                     height: 12,
                   ),
-                  AdminMenu(searchQuery: _searchQuery),
+                  AdminMenu(
+                    key: _adminMenuKey,
+                    searchQuery: _searchQuery,
+                  ),
                 ],
               ),
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddData(),
-              ),
-            );
-          },
-          child: Icon(Icons.add),
-        ));
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddData(),
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }

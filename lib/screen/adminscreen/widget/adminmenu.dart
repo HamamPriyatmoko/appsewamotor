@@ -1,4 +1,5 @@
-import 'package:appsewamotor/screen/usersscreen/detailsscreen.dart';
+import 'package:appsewamotor/screen/adminscreen/admindetailscreen.dart';
+import 'package:appsewamotor/screen/adminscreen/widget/imageplaceholde.dart';
 import 'package:appsewamotor/service/api_service.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +12,10 @@ class AdminMenu extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ListMenuState createState() => _ListMenuState();
+  AdminMenuState createState() => AdminMenuState();
 }
 
-class _ListMenuState extends State<AdminMenu> {
+class AdminMenuState extends State<AdminMenu> {
   List<Map<String, dynamic>> items = [];
   bool isLoading = true;
 
@@ -25,6 +26,9 @@ class _ListMenuState extends State<AdminMenu> {
   }
 
   Future<void> fetchItems() async {
+    setState(() {
+      isLoading = true;
+    });
     try {
       final List<Map<String, dynamic>> fetchedItems =
           await apiservice.fetchProducts();
@@ -44,7 +48,7 @@ class _ListMenuState extends State<AdminMenu> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator());
     }
 
     final filteredItems = items.where((item) {
@@ -92,7 +96,7 @@ class _ListMenuState extends State<AdminMenu> {
 
     return ListView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: filteredItems.length,
       itemBuilder: (context, index) {
         final item = filteredItems[index];
@@ -101,12 +105,12 @@ class _ListMenuState extends State<AdminMenu> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailsScreen(item: item),
+                builder: (context) => AdminDetailsScreen(item: item),
               ),
             );
           },
           child: Card(
-            margin: EdgeInsets.all(12),
+            margin: const EdgeInsets.all(12),
             child: Column(
               children: [
                 Row(
@@ -117,15 +121,13 @@ class _ListMenuState extends State<AdminMenu> {
                       width: 350,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: const Color.fromARGB(255, 54, 52, 52)),
+                          color: const Color.fromARGB(255, 255, 255, 255)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          item['image']!,
-                          width: 50,
-                          height: 100,
-                          fit: BoxFit
-                              .cover, // Ensure the image fits the container
+                        child: ImageWithPlaceholder(
+                          imageUrl: item['image']!,
+                          width: 350,
+                          height: 180,
                         ),
                       ),
                     ),

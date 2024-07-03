@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:appsewamotor/screen/adminscreen/model/Produk.dart';
 import 'package:http/http.dart' as http;
 
 class apiservice {
@@ -98,5 +100,28 @@ class apiservice {
     } else {
       throw Exception('Gagal melakukan login');
     }
+  }
+
+  Future<Map<String, dynamic>?> uploadImage(File image) async {
+    final request = http.MultipartRequest('POST', Uri.parse('$baseUrl/upload'));
+    request.files.add(await http.MultipartFile.fromPath('gambar', image.path));
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseData = await response.stream.bytesToString();
+      return jsonDecode(responseData);
+    } else {
+      return null;
+    }
+  }
+
+  // Metode untuk menambah produk baru
+  Future<http.Response> addProduct(Produk produk) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/product'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(produk.toJson()),
+    );
+    return response;
   }
 }
