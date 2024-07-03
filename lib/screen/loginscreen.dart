@@ -1,7 +1,9 @@
 import 'package:appsewamotor/provider/userprovider.dart';
+import 'package:appsewamotor/screen/splashscreen.dart';
 import 'package:appsewamotor/service/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:appsewamotor/screen/menuscreen.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -63,7 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+          ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(

@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 
 class AdminMenu extends StatefulWidget {
   final String searchQuery;
-  final String selectedCategory;
 
   AdminMenu({
     Key? key,
     required this.searchQuery,
-    required this.selectedCategory,
   }) : super(key: key);
 
   @override
@@ -55,13 +53,11 @@ class _ListMenuState extends State<AdminMenu> {
       final harga = item['harga']!.toLowerCase();
       final jenis = item['jenis']!.toLowerCase();
       final searchQuery = widget.searchQuery.toLowerCase();
-      final selectedCategory = widget.selectedCategory.toLowerCase();
 
       return (title.contains(searchQuery) ||
-              description.contains(searchQuery) ||
-              harga.contains(searchQuery) ||
-              jenis.contains(searchQuery)) &&
-          (selectedCategory.isEmpty || jenis.contains(selectedCategory));
+          description.contains(searchQuery) ||
+          harga.contains(searchQuery) ||
+          jenis.contains(searchQuery));
     }).toList();
 
     const stars = Row(

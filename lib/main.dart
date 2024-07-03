@@ -29,9 +29,7 @@ class MyApp extends StatelessWidget {
           seedColor: Color.fromARGB(255, 255, 234, 255),
         ),
       ),
-      home: HomeScreen(
-        
-      ),
+      home: HomeAdmin(),
     );
   }
 }

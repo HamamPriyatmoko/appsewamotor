@@ -1,3 +1,4 @@
+import 'package:appsewamotor/screen/adminscreen/widget/adminmenu.dart';
 import 'package:appsewamotor/screen/adminscreen/widget/slider_menu.dart';
 import 'package:flutter/material.dart';
 
@@ -78,7 +79,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                 SizedBox(
                   height: 12,
                 ),
-                
+                AdminMenu(searchQuery: _searchQuery)
               ],
             ),
           ),
